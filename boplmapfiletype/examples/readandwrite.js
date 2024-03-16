@@ -1,12 +1,12 @@
 const fs = require('fs');
 
 class BoplMap {
-    constructor(version, projectName, mapName, developer, blocks) {
+    constructor(version, projectName, mapName, developer, platforms) {
         this.version = version;
         this.projectName = projectName;
         this.mapName = mapName;
         this.developer = developer;
-        this.blocks = blocks;
+        this.platforms = platforms;
     }
 
     toJSON() {
@@ -15,7 +15,7 @@ class BoplMap {
 
     static fromJSON(jsonStr) {
         const data = JSON.parse(jsonStr);
-        return new BoplMap(data.version, data.projectName, data.mapName, data.developer, data.blocks);
+        return new BoplMap(data.version, data.projectName, data.mapName, data.developer, data.platforms);
     }
 }
 
@@ -29,22 +29,4 @@ function readBoplMap(filename) {
     return BoplMap.fromJSON(jsonStr);
 }
 
-// Example usage:
-const blocksData = [
-    { id: 1, type: 'wall' },
-    { id: 2, type: 'door' },
-    { id: 3, type: 'window' }
-];
-
-const myMap = new BoplMap(
-    '1.0',
-    'MyProject',
-    'MyMap',
-    'John Doe',
-    blocksData
-);
-
-writeBoplMap('mymap.boplmap', myMap);
-
-const readMap = readBoplMap('mymap.boplmap');
-console.log(readMap.toJSON());
+module.exports = { BoplMap, writeBoplMap, readBoplMap };

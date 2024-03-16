@@ -1,26 +1,22 @@
 {
   "version": "1.0",
-  "projectName": "MyProject",
-  "mapName": "MyMap",
-  "developer": "John Doe",
+  "projectName": "Boplmap",
+  "mapName": "Boplmap",
+  "developer": "Abstractmelon",
   "platforms": [
     {
-      "location": { "x": 10, "y": 20 },
-      "biome": "Forest",
-      "type": "Wooden",
+      "transform": { "x": 10, "y": 20 },
+      "rotation": 0,
+      "biome": "Plain",
+      "type": "Ball",
       "blank": false
     },
     {
-      "location": { "x": 30, "y": 40 },
-      "biome": "Desert",
-      "type": "Sandstone",
+      "transform": { "x": 30, "y": 40 },
+      "rotation": 90,
+      "biome": "Snow",
+      "type": "Long",
       "blank": true
-    },
-    {
-      "location": { "x": 50, "y": 60 },
-      "biome": "Mountains",
-      "type": "Stone",
-      "blank": false
     }
   ]
 }
