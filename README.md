@@ -1,12 +1,12 @@
 # Boplmap Mod
 
 ## Overview
-The Boplmap Mod is a custom modification for [insert game name] that introduces support for loading custom map configurations from `.boplmap` files. These files contain detailed information about map elements such as platforms, their positions, rotations, biomes, and types.
+The Boplmap Mod is a custom modification for Bopl Battle that introduces support for loading custom map configurations from `.boplmap` files. These files contain detailed information about map elements such as platforms, their positions, rotations, biomes, and types.
 
 ## Features
 - Load custom maps from `.boplmap` files.
 - Define map elements including platforms with specific properties like position, rotation, biome, and type.
-- Support for creating diverse and intricate custom maps.
+- Support for creating new and interesting custom maps.
 
 ## Getting Started
 To use the Boplmap Mod in your game, follow these steps:
@@ -16,7 +16,7 @@ To use the Boplmap Mod in your game, follow these steps:
    - Install BepInEx and Splatch if you haven't already.
 
 2. **Usage:**
-   - Place your `.boplmap` files in the designated maps folder.
+   - Place your `.boplmap` files in the BoplBattle/Splotch_config/CustomMaps or the BoplBattle/Bepinex/Config/CustomMaps/ folder.
    - Launch the game and select the Boplmap Mod from the mod menu.
    - Load your custom map and start playing!
 
@@ -53,7 +53,7 @@ To use the Boplmap Mod in your game, follow these steps:
   ]
 }
 ## Compatibility
-The Boplmap Mod is compatible with the following game versions:
+The Boplmap Mod is compatible with the following game & mod versions:
 
 - Bopl Battle 2.1.3
 - Splotch 0.2.0, 0.2.1, 0.3.0, 0.4.0
