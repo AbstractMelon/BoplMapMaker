@@ -1,0 +1,40 @@
+{
+  "version": 2,
+  "dgSpecHash": "a7omJpf9OhWGWM8pIBirvpWFN1S8VzKzHAp7AzDUnqzhjJc4caggLpWs1PTeZFNuCtW8fEtsK9lhaLe9bcSWEw==",
+  "success": false,
+  "projectFilePath": "G:\\Important Files\\bopl\\BoplMapMaker\\mod\\src\\maploader.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\melon\\.nuget\\packages\\microsoft.netframework.referenceassemblies\\1.0.2\\microsoft.netframework.referenceassemblies.1.0.2.nupkg.sha512",
+    "C:\\Users\\melon\\.nuget\\packages\\microsoft.netframework.referenceassemblies.net46\\1.0.2\\microsoft.netframework.referenceassemblies.net46.1.0.2.nupkg.sha512",
+    "C:\\Users\\melon\\.nuget\\packages\\unityengine.modules\\2019.4.5\\unityengine.modules.2019.4.5.nupkg.sha512"
+  ],
+  "logs": [
+    {
+      "code": "NU1101",
+      "level": "Error",
+      "message": "Unable to find package BepInEx.Analyzers. No packages exist with this id in source(s): Microsoft Visual Studio Offline Packages, nuget.org",
+      "libraryId": "BepInEx.Analyzers",
+      "targetGraphs": [
+        ".NETFramework,Version=v4.6"
+      ]
+    },
+    {
+      "code": "NU1101",
+      "level": "Error",
+      "message": "Unable to find package BepInEx.Core. No packages exist with this id in source(s): Microsoft Visual Studio Offline Packages, nuget.org",
+      "libraryId": "BepInEx.Core",
+      "targetGraphs": [
+        ".NETFramework,Version=v4.6"
+      ]
+    },
+    {
+      "code": "NU1101",
+      "level": "Error",
+      "message": "Unable to find package BepInEx.PluginInfoProps. No packages exist with this id in source(s): Microsoft Visual Studio Offline Packages, nuget.org",
+      "libraryId": "BepInEx.PluginInfoProps",
+      "targetGraphs": [
+        ".NETFramework,Version=v4.6"
+      ]
+    }
+  ]
+}
