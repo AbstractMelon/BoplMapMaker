@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net46</TargetFramework>
+    <TargetFramework>net472</TargetFramework>
     <AssemblyName>Maploader</AssemblyName>
     <Description>A map loader plugin for bopl battle</Description>
     <Version>0.0.1</Version>

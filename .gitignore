@@ -1,0 +1,7 @@
+
+mod/src/maploader.csproj
+mod/src/obj/Debug/net472/maploader.csproj.AssemblyReference.cache
+*.vsidx
+*.cache
+mod/src/maploader.csproj
+*.cache
