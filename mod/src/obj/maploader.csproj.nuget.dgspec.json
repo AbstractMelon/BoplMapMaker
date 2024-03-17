@@ -1,32 +1,32 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\djhlo\\OneDrive\\Desktop\\Bopl code\\BoplMapMaker\\mod\\src\\maploader.csproj": {}
+    "G:\\Important Files\\bopl\\BoplMapMaker\\mod\\src\\maploader.csproj": {}
   },
   "projects": {
-    "C:\\Users\\djhlo\\OneDrive\\Desktop\\Bopl code\\BoplMapMaker\\mod\\src\\maploader.csproj": {
+    "G:\\Important Files\\bopl\\BoplMapMaker\\mod\\src\\maploader.csproj": {
       "version": "0.0.1",
       "restore": {
-        "projectUniqueName": "C:\\Users\\djhlo\\OneDrive\\Desktop\\Bopl code\\BoplMapMaker\\mod\\src\\maploader.csproj",
+        "projectUniqueName": "G:\\Important Files\\bopl\\BoplMapMaker\\mod\\src\\maploader.csproj",
         "projectName": "Maploader",
-        "projectPath": "C:\\Users\\djhlo\\OneDrive\\Desktop\\Bopl code\\BoplMapMaker\\mod\\src\\maploader.csproj",
-        "packagesPath": "C:\\Users\\djhlo\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\djhlo\\OneDrive\\Desktop\\Bopl code\\BoplMapMaker\\mod\\src\\obj\\",
+        "projectPath": "G:\\Important Files\\bopl\\BoplMapMaker\\mod\\src\\maploader.csproj",
+        "packagesPath": "C:\\Users\\melon\\.nuget\\packages\\",
+        "outputPath": "G:\\Important Files\\bopl\\BoplMapMaker\\mod\\src\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\djhlo\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\melon\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
-          "net472"
+          "net46"
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
-          "net472": {
-            "targetAlias": "net472",
+          "net46": {
+            "targetAlias": "net46",
             "projectReferences": {}
           }
         },
@@ -37,8 +37,8 @@
         }
       },
       "frameworks": {
-        "net472": {
-          "targetAlias": "net472",
+        "net46": {
+          "targetAlias": "net46",
           "dependencies": {
             "BepInEx.Analyzers": {
               "suppressParent": "All",
@@ -64,7 +64,7 @@
               "version": "[2019.4.5, )"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.304\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.100\\RuntimeIdentifierGraph.json"
         }
       }
     }

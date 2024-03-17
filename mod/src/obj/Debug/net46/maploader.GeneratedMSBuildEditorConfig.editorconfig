@@ -1,3 +1,5 @@
 is_global = true
 build_property.RootNamespace = maploader
-build_property.ProjectDir = C:\Users\djhlo\OneDrive\Desktop\Bopl code\BoplMapMaker\mod\src\
+build_property.ProjectDir = G:\Important Files\bopl\BoplMapMaker\mod\src\
+build_property.EnableComHosting = 
+build_property.EnableGeneratedComInterfaceComImportInterop = 
