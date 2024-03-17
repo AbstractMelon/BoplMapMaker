@@ -52,11 +52,12 @@ To use the Boplmap Mod in your game, follow these steps:
     }
   ]
 }
+```
 ## Compatibility
 The Boplmap Mod is compatible with the following game & mod versions:
 
 - Bopl Battle 2.1.3
-- Splotch 0.2.0, 0.2.1, 0.3.0, 0.4.0
+- Solpch 0.2.0, 0.2.1, 0.3.0, 0.4.0
 - BepInEx 5.4.22
 
 Ensure that you are using the appropriate version of BepInEx and Splatch for your game.
