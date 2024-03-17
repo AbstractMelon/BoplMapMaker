@@ -52,6 +52,7 @@ To use the Boplmap Mod in your game, follow these steps:
     }
   ]
 }
+```
 ## Compatibility
 The Boplmap Mod is compatible with the following game & mod versions:
 
