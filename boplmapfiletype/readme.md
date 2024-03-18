@@ -32,25 +32,30 @@ Each platform object contains the following properties:
 ```json
 {
   "version": "1.0",
-  "projectName": "Boplmap",
   "mapName": "Boplmap",
   "developer": "Abstractmelon",
-  "platforms": [
+  "dateCreated": "2024-03-17"
+  "objects": [
     {
       "transform": { "x": 10, "y": 20 },
       "rotation": 0,
+      "size": { "width": 10, "height": 10 },
       "biome": "Plain",
-      "type": "Ball",
+      "objectType": "Ball",
+      "visibility": true,
       "blank": false
     },
     {
       "transform": { "x": 30, "y": 40 },
       "rotation": 90,
+      "size": { "width": 20, "height": 5 },
       "biome": "Snow",
-      "type": "Long",
+      "objectType": "Long",
+      "visibility": true,
       "blank": true
     }
   ]
 }
+
 
 ```
