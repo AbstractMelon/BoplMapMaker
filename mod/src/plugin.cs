@@ -1,37 +1,42 @@
-using System;
+﻿using BepInEx;
+using BoplFixedMath;
 using HarmonyLib;
 using System.Reflection;
+using UnityEngine;
+using Steamworks;
+using Steamworks.Data;
+using UnityEngine.SceneManagement;
 
-namespace HarmonyTest
+namespace MapMaker
 {
-    class Original
+    [BepInPlugin("com.David_Loves_JellyCar_Worlds.MapMaker", "MapMaker", "1.0.0")]
+    public class Plugin : BaseUnityPlugin
     {
-        public static int RollDice()
+        public static Transform levelt;
+        private void Awake()
         {
-            var random = new Random();
-            return random.Next(1, 7); // Roll dice from 1 to 6
+            Logger.LogInfo("Plugin MapMaker is loaded!");
+
+            Harmony harmony = new Harmony("com.David_Loves_JellyCar_Worlds.MapMaker");
+
+            Logger.LogInfo("harmany created");
+            harmony.PatchAll();
+            Logger.LogInfo("MapMaker Patch Compleate!");
+            SceneManager.sceneLoaded += OnSceneLoaded;
         }
-    }
-
-    class Main
-    {
-        static void Main(string[] args)
+        private static void OnSceneLoaded(Scene scene, LoadSceneMode mode)
         {
-            Console.WriteLine($"Random roll: {Original.RollDice()}"); // Prints: "Random roll: <some number between 1 and 6>"
+            Debug.Log("OnSceneLoaded: " + scene.name);
+            if (scene.name == "Level1")
+            {
+                //find the platforms and remove them (shadow + david)
+                levelt = GameObject.Find("Level").transform;
+                foreach (Transform tplatform in levelt)
+                {
+                    Updater.DestroyFix(tplatform.gameObject);
+                }
 
-            // Actual patching is just a one-liner!
-            Harmony.CreateAndPatchAll(typeof(Main));
-
-            Console.WriteLine($"Random roll: {Original.RollDice()}"); // Will always print "Random roll: 4"
-        }
-
-        [HarmonyPatch(typeof(Original), "RollDice")] // Specify target method with HarmonyPatch attribute
-        [HarmonyPrefix]                              // There are different patch types. Prefix code runs before original code
-        static bool RollRealDice(ref int __result)
-        {
-            // https://xkcd.com/221/
-            __result = 4; // The special __result variable allows you to read or change the return value
-            return false; // Returning false in prefix patches skips running the original code
+            }
         }
     }
 }
