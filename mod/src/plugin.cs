@@ -6,6 +6,9 @@ using UnityEngine;
 using Steamworks;
 using Steamworks.Data;
 using UnityEngine.SceneManagement;
+using System.Collections.Generic;
+using Newtonsoft.Json.Linq;
+using Newtonsoft.Json;
 
 namespace MapMaker
 {
@@ -37,6 +40,37 @@ namespace MapMaker
                 }
 
             }
+        }
+        //chatgpt code
+        public static Dictionary<string, object> Json_decode(string jsonString)
+        {
+            // Deserialize the JSON string into a JObject
+            JObject jsonObject = JsonConvert.DeserializeObject<JObject>(jsonString);
+
+            // Create a dictionary to hold the data
+            Dictionary<string, object> dataDictionary = new Dictionary<string, object>();
+
+            // Iterate through each property in the JObject
+            foreach (var property in jsonObject.Properties())
+            {
+                // If the property is an array, convert it to a list of dictionaries
+                if (property.Value.Type == JTokenType.Array)
+                {
+                    var list = new List<Dictionary<string, object>>();
+                    foreach (var item in property.Value)
+                    {
+                        var itemDict = item.ToObject<Dictionary<string, object>>();
+                        list.Add(itemDict);
+                    }
+                    dataDictionary.Add(property.Name, list);
+                }
+                // Otherwise, add the property directly to the dictionary
+                else
+                {
+                    dataDictionary.Add(property.Name, property.Value.ToObject<object>());
+                }
+            }
+            return dataDictionary;
         }
     }
 }
