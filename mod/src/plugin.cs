@@ -15,6 +15,7 @@ namespace MapMaker
     [BepInPlugin("com.David_Loves_JellyCar_Worlds.MapMaker", "MapMaker", "1.0.0")]
     public class Plugin : BaseUnityPlugin
     {
+        public static GameObject PlatformAbility;
         public static Transform levelt;
         private void Awake()
         {
@@ -38,8 +39,38 @@ namespace MapMaker
                 {
                     Updater.DestroyFix(tplatform.gameObject);
                 }
+                //spawn test platform (david)
+                //chatgpt code to get the Platform ability object
+                GameObject[] allObjects = Resources.FindObjectsOfTypeAll(typeof(GameObject)) as GameObject[];
+                Debug.Log("getting platform object");
+                foreach (GameObject obj in allObjects)
+                {
+                    if (obj.name == "Platform")
+                    {
+                        // Found the object with the desired name and HideAndDontSave flag
+                        // You can now store its reference or perform any other actions
+                        PlatformAbility = obj;
+                        Debug.Log("Found the object: " + obj.name);
+                        break;
+                    }
+                }
+                //get the platform prefab out of the Platform ability gameobject (david)
+                var platformTransform = PlatformAbility.GetComponent(typeof(PlatformTransform)) as PlatformTransform;
+                var platformPrefab = platformTransform.platformPrefab;
+                Debug.Log(platformPrefab);
+                //spawn test platform (david)
 
+                var StickyRect = FixTransform.InstantiateFixed<StickyRoundedRectangle>(platformPrefab, new Vec2(Fix.Zero, Fix.Zero));
+                StickyRect.rr.Scale = Fix.One;
+                var platform = StickyRect.GetComponent<ResizablePlatform>();
+                platform.GetComponent<DPhysicsRoundedRect>().ManualInit();
+
+                Debug.Log("spawned platform?");
             }
+        }
+        public static void ResizePlatform(ResizablePlatform platform, Fix newWidth, Fix newHeight, Fix newRadius)
+        {
+            platform.ResizePlatform(newHeight, newWidth, newRadius, true);
         }
         //chatgpt code
         public static Dictionary<string, object> Json_decode(string jsonString)
