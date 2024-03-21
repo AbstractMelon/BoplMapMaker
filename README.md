@@ -33,16 +33,21 @@ To use the Boplmap Mod in your game, follow these steps:
 {
   "version": "1.0",
   "mapName": "Boplmap",
+  "description": "A Bopl Map",
   "developer": "Abstractmelon",
-  "dateCreated": "2024-03-17"
-  "objects": [
+  "dateCreated": "2024-03-17",
+  "mapId": "1",
+  "siteVersion": "0.1",
+  "icon": "https://raw.githubusercontent/abstractmelon/boplmapmaker/main/images/icon.jpeg"
+  "platforms": [
     {
       "transform": { "x": 10, "y": 20 },
       "rotation": 0,
       "size": { "width": 10, "height": 10 },
       "biome": "Plain",
-      "objectType": "Ball",
+      "platformType": "Ball",
       "visibility": true,
+      "AntiLockPlatform": false,
       "blank": false
     },
     {
@@ -50,15 +55,13 @@ To use the Boplmap Mod in your game, follow these steps:
       "rotation": 90,
       "size": { "width": 20, "height": 5 },
       "biome": "Snow",
-      "objectType": "Long",
+      "platformType": "Long",
       "visibility": true,
+      "AntiLockPlatform": false,
       "blank": true
     }
   ]
 }
-
-
-
 ```
 ## Compatibility
 The Boplmap Mod is compatible with the following game & mod versions:
