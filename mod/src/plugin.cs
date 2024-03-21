@@ -1,4 +1,4 @@
-﻿using BepInEx;
+using BepInEx;
 using BoplFixedMath;
 using HarmonyLib;
 using System.Reflection;
@@ -11,6 +11,7 @@ using Newtonsoft.Json.Linq;
 using Newtonsoft.Json;
 using System;
 using MonoMod.Utils;
+using System.IO;
 
 namespace MapMaker
 {
@@ -22,17 +23,15 @@ namespace MapMaker
         public static StickyRoundedRectangle platformPrefab;
         public static List<ResizablePlatform> Platforms;
         public static int t;
-        private void Awake()
         private string mapsFolderPath; // Create blank folder path var
+
+        private void Awake()
         {
             Logger.LogInfo("MapLoader Has been loaded");
-
             Harmony harmony = new Harmony("com.MLT.MapLoader");
             Logger.LogInfo("Harmony harmony = new Harmony -- Melon, 2024");
-            
             harmony.PatchAll(); // Patch Harmony
             Logger.LogInfo("MapMaker Patch Compleate!");
-            
             SceneManager.sceneLoaded += OnSceneLoaded;
 
             // Make folder path
@@ -45,6 +44,7 @@ namespace MapMaker
                 Logger.LogInfo("Maps folder created.");
             }
         }
+
         private static void OnSceneLoaded(Scene scene, LoadSceneMode mode)
         {
             Debug.Log("OnSceneLoaded: " + scene.name);
@@ -83,6 +83,7 @@ namespace MapMaker
                 Debug.Log("platform(s) have been spawned");
             }
         }
+
         public static void SpawnPlatform(Fix X, Fix Y, Fix Width, Fix Height, Fix Radius)
         {
             //spawn platform (david)
@@ -95,6 +96,7 @@ namespace MapMaker
             //Debug.Log(platform);
             //Platforms.Add(platform);
         }
+
         public static void Update()
         {
             //ignore this its broken
@@ -104,11 +106,13 @@ namespace MapMaker
             //    t++;
             //}
         }
+
         //this can be called anytime the object is active. this means you can have animated levels with shape changing platforms
         public static void ResizePlatform(ResizablePlatform platform, Fix newWidth, Fix newHeight, Fix newRadius)
         {
             platform.ResizePlatform(newHeight, newWidth, newRadius, true);
         }
+
         // JSON reading code here.
     }
 }
