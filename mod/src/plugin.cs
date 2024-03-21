@@ -9,6 +9,8 @@ using UnityEngine.SceneManagement;
 using System.Collections.Generic;
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json;
+using System;
+using MonoMod.Utils;
 
 namespace MapMaker
 {
@@ -17,6 +19,9 @@ namespace MapMaker
     {
         public static GameObject PlatformAbility;
         public static Transform levelt;
+        public static StickyRoundedRectangle platformPrefab;
+        public static List<ResizablePlatform> Platforms;
+        public static int t;
         private void Awake()
         {
             Logger.LogInfo("Plugin MapMaker is loaded!");
@@ -56,18 +61,38 @@ namespace MapMaker
                 }
                 //get the platform prefab out of the Platform ability gameobject (david)
                 var platformTransform = PlatformAbility.GetComponent(typeof(PlatformTransform)) as PlatformTransform;
-                var platformPrefab = platformTransform.platformPrefab;
+                platformPrefab = platformTransform.platformPrefab as StickyRoundedRectangle;
                 Debug.Log(platformPrefab);
+                //make it a grass platform (sets it but doesnt change anything)
+                // TODO make it change the texter asset in the renderer
+                platformPrefab.platformType = PlatformType.grass;
                 //spawn test platform (david)
-
-                var StickyRect = FixTransform.InstantiateFixed<StickyRoundedRectangle>(platformPrefab, new Vec2(Fix.Zero, Fix.Zero));
-                StickyRect.rr.Scale = Fix.One;
-                var platform = StickyRect.GetComponent<ResizablePlatform>();
-                platform.GetComponent<DPhysicsRoundedRect>().ManualInit();
-
-                Debug.Log("spawned platform?");
+                SpawnPlatform((Fix)0, (Fix)0, (Fix)0.01, (Fix)0.01, (Fix)5);
+                Debug.Log("platform(s) have been spawned");
             }
         }
+        public static void SpawnPlatform(Fix X, Fix Y, Fix Width, Fix Height, Fix Radius)
+        {
+            //spawn platform (david)
+            var StickyRect = FixTransform.InstantiateFixed<StickyRoundedRectangle>(platformPrefab, new Vec2(X, Y));
+            StickyRect.rr.Scale = Fix.One;
+            var platform = StickyRect.GetComponent<ResizablePlatform>();
+            platform.GetComponent<DPhysicsRoundedRect>().ManualInit();
+            ResizePlatform(platform, Width, Height, Radius);
+            Debug.Log("spawned platform");
+            //Debug.Log(platform);
+            //Platforms.Add(platform);
+        }
+        public static void Update()
+        {
+            //ignore this its broken
+            //if (Platforms.Count > 0)
+            //{
+            //    ResizePlatform(Platforms[0], (Fix)0.1, (Fix)0.1, (Fix)(5 + t * 0.05));
+            //    t++;
+            //}
+        }
+        //this can be called anytime the object is active. this means you can have animated levels with shape changing platforms
         public static void ResizePlatform(ResizablePlatform platform, Fix newWidth, Fix newHeight, Fix newRadius)
         {
             platform.ResizePlatform(newHeight, newWidth, newRadius, true);
