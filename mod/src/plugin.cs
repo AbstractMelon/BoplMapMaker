@@ -79,22 +79,52 @@ namespace MapMaker
                 // TODO make it change the texter asset in the renderer
                 platformPrefab.platformType = PlatformType.grass;
                 //spawn test platform (david)
-                SpawnPlatform((Fix)0, (Fix)0, (Fix)0.01, (Fix)0.01, (Fix)5);
+                // Spawn multiple platforms with different parameters
+
+                // Spawns a platform at the specified position with the given dimensions and corner radius.
+                // Parameters:
+                //
+                //   X: The x-coordinate of the platform's center.
+                //   Y: The y-coordinate of the platform's center.
+                //   Width: The width of the platform.
+                //   Height: The height of the platform.
+                //   Radius: The radius of the rounded corners of the platform.
+                //
+                // SpawnPlatform((Fix)x, (Fix)y, (Fix)Width, (Fix)Height, (Fix)Radius);
+
+                // Randomly generate new platforms between 5 and 25 times
+
+                SpawnPlatform((Fix)8.058, (Fix)(-5.527), (Fix)2.365, (Fix)2.743, (Fix)4.683);
+                SpawnPlatform((Fix)(-0.142), (Fix)5.989, (Fix)4.371, (Fix)4.801, (Fix)2.985f);
+                SpawnPlatform((Fix)6.952, (Fix)(-7.186), (Fix)4.029, (Fix)4.873, (Fix)5.738);
+                SpawnPlatform((Fix)9.051, (Fix)9.615, (Fix)4.784, (Fix)3.239, (Fix)7.612);
+                SpawnPlatform((Fix)(-5.889), (Fix)9.606, (Fix)3.005, (Fix)4.621, (Fix)6.127f);
+                SpawnPlatform((Fix)13.678, (Fix)(-1.508), (Fix)2.298, (Fix)4.003, (Fix)1.247);
+                SpawnPlatform((Fix)(-2.401), (Fix)(-6.349), (Fix)4.283, (Fix)3.792, (Fix)0.862f);
+                SpawnPlatform((Fix)10.362, (Fix)(-12.639), (Fix)3.747, (Fix)2.687, (Fix)8.744);
+                SpawnPlatform((Fix)(-2.952), (Fix)13.016, (Fix)3.498, (Fix)1.471, (Fix)7.049f);
+                SpawnPlatform((Fix)0.367, (Fix)(-5.642), (Fix)4.727, (Fix)1.442, (Fix)9.108);
+                SpawnPlatform((Fix)(-14.062), (Fix)8.091, (Fix)1.911, (Fix)2.864, (Fix)2.917f);
+                SpawnPlatform((Fix)11.842, (Fix)11.489, (Fix)4.576, (Fix)1.835, (Fix)8.763);
+                SpawnPlatform((Fix)(-10.693), (Fix)(-3.311), (Fix)3.712, (Fix)3.068, (Fix)4.933f);
+                SpawnPlatform((Fix)8.783, (Fix)(-10.665), (Fix)1.833, (Fix)4.288, (Fix)1.896);
+                SpawnPlatform((Fix)3.888, (Fix)(-6.627), (Fix)2.839, (Fix)4.655, (Fix)7.945f);
+
+
+
                 Debug.Log("platform(s) have been spawned");
             }
         }
 
         public static void SpawnPlatform(Fix X, Fix Y, Fix Width, Fix Height, Fix Radius)
         {
-            //spawn platform (david)
+            // Spawn platform (david - and now melon)
             var StickyRect = FixTransform.InstantiateFixed<StickyRoundedRectangle>(platformPrefab, new Vec2(X, Y));
             StickyRect.rr.Scale = Fix.One;
             var platform = StickyRect.GetComponent<ResizablePlatform>();
             platform.GetComponent<DPhysicsRoundedRect>().ManualInit();
             ResizePlatform(platform, Width, Height, Radius);
-            Debug.Log("spawned platform");
-            //Debug.Log(platform);
-            //Platforms.Add(platform);
+            Debug.Log("Spawned platform at position (" + X + ", " + Y + ") with dimensions (" + Width + ", " + Height + ") and radius " + Radius);
         }
 
         public static void Update()
