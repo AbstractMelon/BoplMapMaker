@@ -14,7 +14,7 @@ using MonoMod.Utils;
 
 namespace MapMaker
 {
-    [BepInPlugin("com.David_Loves_JellyCar_Worlds.MapMaker", "MapMaker", "1.0.0")]
+    [BepInPlugin("com.MLT.MapLoader", "MapLoader", "1.0.0")]
     public class Plugin : BaseUnityPlugin
     {
         public static GameObject PlatformAbility;
@@ -23,20 +23,32 @@ namespace MapMaker
         public static List<ResizablePlatform> Platforms;
         public static int t;
         private void Awake()
+        private string mapsFolderPath; // Create blank folder path var
         {
-            Logger.LogInfo("Plugin MapMaker is loaded!");
+            Logger.LogInfo("MapLoader Has been loaded");
 
-            Harmony harmony = new Harmony("com.David_Loves_JellyCar_Worlds.MapMaker");
-
-            Logger.LogInfo("harmany created");
-            harmony.PatchAll();
+            Harmony harmony = new Harmony("com.MLT.MapLoader");
+            Logger.LogInfo("Harmony harmony = new Harmony -- Melon, 2024");
+            
+            harmony.PatchAll(); // Patch Harmony
             Logger.LogInfo("MapMaker Patch Compleate!");
+            
             SceneManager.sceneLoaded += OnSceneLoaded;
+
+            // Make folder path
+            mapsFolderPath = Path.Combine(Paths.PluginPath, "Maps");
+
+            // Make Folder
+            if (!Directory.Exists(mapsFolderPath))
+            {
+                Directory.CreateDirectory(mapsFolderPath);
+                Logger.LogInfo("Maps folder created.");
+            }
         }
         private static void OnSceneLoaded(Scene scene, LoadSceneMode mode)
         {
             Debug.Log("OnSceneLoaded: " + scene.name);
-            if (scene.name == "Level1")
+            if (scene.name == "Level1") // Check level, Replace with mapId from MapMaker Thing
             {
                 //find the platforms and remove them (shadow + david)
                 levelt = GameObject.Find("Level").transform;
