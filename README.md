@@ -38,7 +38,7 @@ To use the Boplmap Mod in your game, follow these steps:
   "dateCreated": "2024-03-17",
   "mapId": "1",
   "siteVersion": "0.1",
-  "icon": "https://raw.githubusercontent/abstractmelon/boplmapmaker/main/images/icon.jpeg"
+  "icon": "https://raw.githubusercontent.com/AbstractMelon/BoplMapMaker/blob/main/images/icon.jpg"
   "platforms": [
     {
       "transform": { "x": 10, "y": 20 },
