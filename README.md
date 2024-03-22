@@ -16,7 +16,7 @@ To use the Boplmap Mod in your game, follow these steps:
    - Install BepInEx and Splatch if you haven't already.
 
 2. **Usage:**
-   - Place your `.boplmap` files in the BoplBattle/Splotch_config/CustomMaps or the BoplBattle/Bepinex/Config/CustomMaps/ folder.
+   - Place your `.boplmap` files in the BoplBattle/Splotch_config/CustomMaps or the BoplBattle/Bepinex/Plugins/Maps/ folder.
    - Launch the game and select the Boplmap Mod from the mod menu.
    - Load your custom map and start playing!
 
