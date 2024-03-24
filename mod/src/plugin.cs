@@ -7,12 +7,10 @@ using Steamworks;
 using Steamworks.Data;
 using UnityEngine.SceneManagement;
 using System.Collections.Generic;
-using Newtonsoft.Json.Linq;
-using Newtonsoft.Json;
-using Newtonsoft;
 using System;
 using MonoMod.Utils;
 using System.IO;
+using MiniJSON;
 
 namespace MapMaker
 {
@@ -24,7 +22,7 @@ namespace MapMaker
         public static StickyRoundedRectangle platformPrefab;
         public static List<ResizablePlatform> Platforms;
         public static int t;
-        private string mapsFolderPath; // Create blank folder path var
+        public static string mapsFolderPath; // Create blank folder path var
 
         private void Awake()
         {
@@ -44,13 +42,9 @@ namespace MapMaker
                 Directory.CreateDirectory(mapsFolderPath);
                 Logger.LogInfo("Maps folder created.");
             }
-            else
-            {
-                LoadMapsFromFolder();
-            }
         }
-
-        private void LoadMapsFromFolder()
+        //CALL ONLY ON LEVEL LOAD!
+        public static void LoadMapsFromFolder()
         {
             string[] mapFiles = Directory.GetFiles(mapsFolderPath, "*.boplmap");
             foreach (string mapFile in mapFiles)
@@ -58,38 +52,66 @@ namespace MapMaker
                 try
                 {
                     string mapJson = File.ReadAllText(mapFile);
-                    Logger.LogInfo($"Loaded map from file: {Path.GetFileName(mapFile)}");
+                    Debug.Log($"Loaded map from file: {Path.GetFileName(mapFile)}");
                     SpawnPlatformsFromMap(mapJson);
                 }
                 catch (Exception ex)
                 {
-                    Logger.LogError($"Failed to load map from file: {Path.GetFileName(mapFile)}. Error: {ex.Message}");
+                    Debug.LogError($"Failed to load map from file: {Path.GetFileName(mapFile)}. Error: {ex.Message}");
                 }
             }
         }
 
-        private void SpawnPlatformsFromMap(string mapJson)
+        public static void SpawnPlatformsFromMap(string mapJson)
         {
-            JObject mapData = JObject.Parse(mapJson);
-            JArray platforms = (JArray)mapData["platforms"];
-            foreach (JToken platform in platforms)
+            //get the platform prefab out of the Platform ability gameobject (david) DO NOT REMOVE!
+            //chatgpt code to get the Platform ability object
+            GameObject[] allObjects = Resources.FindObjectsOfTypeAll(typeof(GameObject)) as GameObject[];
+            Debug.Log("getting platform object");
+            foreach (GameObject obj in allObjects)
+            {
+                if (obj.name == "Platform")
+                {
+                    // Found the object with the desired name and HideAndDontSave flag
+                    // You can now store its reference or perform any other actions
+                    PlatformAbility = obj;
+                    Debug.Log("Found the object: " + obj.name);
+                    break;
+                }
+            }
+            var platformTransform = PlatformAbility.GetComponent(typeof(PlatformTransform)) as PlatformTransform;
+            platformPrefab = platformTransform.platformPrefab;
+            //turn the json into a dicsanary. (david+chatgpt) dont remove it as it works.
+            Dictionary<string, object> Dict = MiniJSON.Json.Deserialize(mapJson) as Dictionary<string, object>;
+            List<object> platforms = (List<object>)Dict["platforms"];
+            Debug.Log("platforms set");
+            foreach (Dictionary<String, object> platform in platforms)
             {
                 try
                 {
-                    // Extract platform data
-                    float x = platform["transform"]["x"].Value<float>();
-                    float y = platform["transform"]["y"].Value<float>();
-                    float width = platform["size"]["width"].Value<float>();
-                    float height = platform["size"]["height"].Value<float>();
-                    float radius = platform["radius"].Value<float>();
+                    // Extract platform data (david)
+                    Dictionary<string, object> transform = (Dictionary<string, object>)platform["transform"];
+                    Debug.Log("transform set");
+                    Dictionary<string, object> size = (Dictionary<string, object>)platform["size"];
+                    Debug.Log("size set");
+                    double x = (double)transform["x"];
+                    Debug.Log("x set");
+                    double y = (double)transform["y"];
+                    Debug.Log("y set");
+                    double width = (double)size["width"];
+                    Debug.Log("width set");
+                    double height = (double)size["height"];
+                    Debug.Log("hight set");
+                    double radius = (double)platform["radius"];
+                    Debug.Log("radius set");
 
                     // Spawn platform
                     SpawnPlatform(new Fix((int)x), new Fix((int)y), new Fix((int)width), new Fix((int)height), new Fix((int)radius));
-                    Logger.LogInfo("Platform spawned successfully");
+                    Debug.Log("Platform spawned successfully");
                 }
                 catch (Exception ex)
-                {
-                    Logger.LogError($"Failed to spawn platform. Error: {ex.Message}");
+                {   
+                    Debug.LogError($"Failed to spawn platform. Error: {ex.Message}");
                 }
             }
         }
@@ -105,6 +127,7 @@ namespace MapMaker
                 {
                     Updater.DestroyFix(tplatform.gameObject);
                 }
+                LoadMapsFromFolder();
             }
         }
 
