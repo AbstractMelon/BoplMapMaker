@@ -106,7 +106,7 @@ namespace MapMaker
                     Debug.Log("radius set");
 
                     // Spawn platform
-                    SpawnPlatform(new Fix((int)x), new Fix((int)y), new Fix((int)width), new Fix((int)height), new Fix((int)radius));
+                    SpawnPlatform((Fix)x, (Fix)y, (Fix)width, (Fix)height, (Fix)radius);
                     Debug.Log("Platform spawned successfully");
                 }
                 catch (Exception ex)
