@@ -37,28 +37,28 @@ To use the Boplmap Mod in your game, follow these steps:
   "developer": "Abstractmelon",
   "dateCreated": "2024-03-17",
   "mapId": "1",
-  "siteVersion": "0.1",
-  "icon": "https://raw.githubusercontent.com/AbstractMelon/BoplMapMaker/blob/main/images/icon.jpg"
+  "siteVersion": "0.3",
+  "icon": "https://raw.githubusercontent/abstractmelon/boplmapmaker/main/images/icon.jpeg"
   "platforms": [
     {
       "transform": { "x": 10, "y": 20 },
-      "rotation": 0,
       "size": { "width": 10, "height": 10 },
+      "radius": 1;
+      "rotation": 0,
       "biome": "Plain",
-      "platformType": "Ball",
       "visibility": true,
       "AntiLockPlatform": false,
       "blank": false
     },
     {
-      "transform": { "x": 30, "y": 40 },
-      "rotation": 90,
-      "size": { "width": 20, "height": 5 },
-      "biome": "Snow",
-      "platformType": "Long",
+      "transform": { "x": 10, "y": 20 },
+      "size": { "width": 10, "height": 10 },
+      "radius": 1;
+      "rotation": 0,
+      "biome": "Plain",
       "visibility": true,
       "AntiLockPlatform": false,
-      "blank": true
+      "blank": false
     }
   ]
 }
