@@ -38,7 +38,7 @@ To use the Boplmap Mod in your game, follow these steps:
   "dateCreated": "2024-03-17",
   "mapId": "1",
   "siteVersion": "0.3",
-  "icon": "https://raw.githubusercontent/abstractmelon/boplmapmaker/main/images/icon.jpeg"
+  "icon": "https://raw.githubusercontent/abstractmelon/boplmapmaker/main/images/icon.jpeg",
   "platforms": [
     {
       "transform": { "x": 10, "y": 20 },
@@ -78,4 +78,4 @@ Ensure that you are using the appropriate version of BepInEx and Splatch for you
 - Special thanks to **Unluckycrafter** for their support and contributions.
 
 ## License
-This mod is released under the GNU GENERAL PUBLIC LICENSE v3.0 license. See the `LICENSE` file for more information.
+This mod is released under the Creative Commons Attribution 4.0 license. See the `LICENSE` file for more information.
