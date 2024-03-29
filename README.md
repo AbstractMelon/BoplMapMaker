@@ -41,20 +41,20 @@ To use the Boplmap Mod in your game, follow these steps:
   "icon": "https://raw.githubusercontent/abstractmelon/boplmapmaker/main/images/icon.jpeg",
   "platforms": [
     {
-      "transform": { "x": 10, "y": 20 },
-      "size": { "width": 10, "height": 10 },
-      "radius": 1;
-      "rotation": 0,
+      "transform": { "x": 10.0, "y": 20.0 },
+      "size": { "width": 10.0, "height": 10.0 },
+      "radius": 1.0;
+      "rotation": 0.0,
       "biome": "Plain",
       "visibility": true,
       "AntiLockPlatform": false,
       "blank": false
     },
     {
-      "transform": { "x": 10, "y": 20 },
-      "size": { "width": 10, "height": 10 },
-      "radius": 1;
-      "rotation": 0,
+      "transform": { "x": 10.0, "y": 20.0 },
+      "size": { "width": 10.0, "height": 10.0 },
+      "radius": 1.0;
+      "rotation": 0.0,
       "biome": "Plain",
       "visibility": true,
       "AntiLockPlatform": false,
