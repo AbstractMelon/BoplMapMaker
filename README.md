@@ -74,8 +74,9 @@ Ensure that you are using the appropriate version of BepInEx and Splatch for you
 
 ## Credits
 - MapMakerSite & .boplmap Developed by **Abstractmelon**.
-- CustomMapLoader Developed by **DavidLovesJellycarWorlds** & **shad0w_dev**
+- CustomMapLoader Developed by **DavidLovesJellycarWorlds**
 - Special thanks to **Unluckycrafter** for their support and contributions.
+- **shad0w_dev**
 
 ## License
 This mod is released under the Creative Commons Attribution 4.0 license. See the `LICENSE` file for more information.
