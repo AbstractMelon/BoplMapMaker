@@ -11,6 +11,8 @@ using System;
 using MonoMod.Utils;
 using System.IO;
 using MiniJSON;
+using System.Text.RegularExpressions;
+using UnityEngine.InputSystem;
 
 namespace MapMaker
 {
@@ -91,22 +93,20 @@ namespace MapMaker
                 {
                     // Extract platform data (david)
                     Dictionary<string, object> transform = (Dictionary<string, object>)platform["transform"];
-                    Debug.Log("transform set");
                     Dictionary<string, object> size = (Dictionary<string, object>)platform["size"];
-                    Debug.Log("size set");
                     double x = (double)transform["x"];
-                    Debug.Log("x set");
                     double y = (double)transform["y"];
-                    Debug.Log("y set");
                     double width = (double)size["width"];
-                    Debug.Log("width set");
+                    //doesnt work if it is a int for some reson? invalid cast error.
                     double height = (double)size["height"];
-                    Debug.Log("hight set");
                     double radius = (double)platform["radius"];
-                    Debug.Log("radius set");
-
+                    double rotatson = 0;
+                    if (platform.ContainsKey("rotation"))
+                    { 
+                        rotatson = (double)platform["rotation"]; 
+                    }
                     // Spawn platform
-                    SpawnPlatform((Fix)x, (Fix)y, (Fix)width, (Fix)height, (Fix)radius);
+                    SpawnPlatform((Fix)x, (Fix)y, (Fix)width, (Fix)height, (Fix)radius, (Fix)rotatson);
                     Debug.Log("Platform spawned successfully");
                 }
                 catch (Exception ex)
@@ -119,7 +119,7 @@ namespace MapMaker
         private static void OnSceneLoaded(Scene scene, LoadSceneMode mode)
         {
             Debug.Log("OnSceneLoaded: " + scene.name);
-            if (scene.name == "Level1") // TODO: Check level, Replace with mapId from MapMaker Thing
+            if (IsLevelName(scene.name)) // TODO: Check level, Replace with mapId from MapMaker Thing
             {
                 //find the platforms and remove them (shadow + david)
                 levelt = GameObject.Find("Level").transform;
@@ -131,7 +131,7 @@ namespace MapMaker
             }
         }
 
-        public static void SpawnPlatform(Fix X, Fix Y, Fix Width, Fix Height, Fix Radius)
+        public static void SpawnPlatform(Fix X, Fix Y, Fix Width, Fix Height, Fix Radius, Fix rotatson)
         {
             // Spawn platform (david - and now melon)
             var StickyRect = FixTransform.InstantiateFixed<StickyRoundedRectangle>(platformPrefab, new Vec2(X, Y));
@@ -139,6 +139,8 @@ namespace MapMaker
             var platform = StickyRect.GetComponent<ResizablePlatform>();
             platform.GetComponent<DPhysicsRoundedRect>().ManualInit();
             ResizePlatform(platform, Width, Height, Radius);
+            //45 degrees
+            StickyRect.GetGroundBody().up = new Vec2(rotatson);
             Debug.Log("Spawned platform at position (" + X + ", " + Y + ") with dimensions (" + Width + ", " + Height + ") and radius " + Radius);
         }
 
@@ -157,7 +159,16 @@ namespace MapMaker
         {
             platform.ResizePlatform(newHeight, newWidth, newRadius, true);
         }
-
+        public static bool IsLevelName(String input)
+        {
+            Regex regex = new Regex("Level[0-9]+", RegexOptions.IgnoreCase);
+            return regex.IsMatch(input);
+        }
+        //https://stormconsultancy.co.uk/blog/storm-news/convert-an-angle-in-degrees-to-radians-in-c/
+        public double ConvertToRadians(double angle)
+        {
+            return (Math.PI / 180) * angle;
+        }
         // JSON reading code here.
     }
 }
