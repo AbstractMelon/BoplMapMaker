@@ -13,6 +13,8 @@ using System.IO;
 using MiniJSON;
 using System.Text.RegularExpressions;
 using UnityEngine.InputSystem;
+using System.Linq;
+using System.Drawing;
 
 namespace MapMaker
 {
@@ -25,7 +27,7 @@ namespace MapMaker
         public static List<ResizablePlatform> Platforms;
         public static int t;
         public static string mapsFolderPath; // Create blank folder path var
-
+        public static int CurrentMapId;
         private void Awake()
         {
             Logger.LogInfo("MapLoader Has been loaded");
@@ -45,6 +47,60 @@ namespace MapMaker
                 Logger.LogInfo("Maps folder created.");
             }
         }
+        //see if there is a custom map we should load (returns enum) (david) (this was annoying to make but at least i learned about predicits!)
+        public static MapIdCheckerThing CheckIfWeHaveCustomMapWithMapId()
+        {
+            string[] mapFiles = Directory.GetFiles(mapsFolderPath, "*.boplmap");
+            int[] MapIds = {};
+            foreach (string mapFile in mapFiles)
+            {
+                try
+                {
+                    string mapJson = File.ReadAllText(mapFile);
+                    Debug.Log($"Loaded map from file: {Path.GetFileName(mapFile)} to check if it has map id {CurrentMapId}");
+                    Dictionary<string, object> Dict = MiniJSON.Json.Deserialize(mapJson) as Dictionary<string, object>;
+                    //add it to a array to be checked
+                    int mapid = int.Parse((string)Dict["mapId"]);
+                    Debug.Log("Map has Mapid of " +  mapid);
+                    MapIds = MapIds.Append(mapid).ToArray();
+                }
+                catch (Exception ex)
+                {
+                    Debug.LogError($"Failed to get MapId from file: {Path.GetFileName(mapFile)}. Error: {ex.Message}");
+                }
+            }
+            //define a predicit (basicly a funcsion that checks if a value meets a critera. in this case being = to CurrentMapId)
+            Predicate<int> predicate = ValueEqualsCurrentMapId;
+            //get a list of map ids that match the current map
+            int[] ValidMapIds = Array.FindAll(MapIds, predicate);
+            Debug.Log("MapIds: " + MapIds.Length + " ValidMapIds: " + ValidMapIds.Length);
+            if (ValidMapIds.Length > 0)
+            {
+                if (ValidMapIds.Length > 1)
+                {
+                    return MapIdCheckerThing.MultipleMapsFoundWithId;
+                }
+                else
+                {
+                    return MapIdCheckerThing.MapFoundWithId;
+                }
+            }
+            else return MapIdCheckerThing.NoMapFoundWithId;
+
+
+        }
+        //check if value = CurrentMapId. used for CheckIfWeHaveCustomMapWithMapId
+        public static bool ValueEqualsCurrentMapId(int ValueToCheck)
+        {
+            if (ValueToCheck == CurrentMapId)
+            { 
+                return true; 
+            }
+            else 
+            {
+                return false; 
+            }
+        }
         //CALL ONLY ON LEVEL LOAD!
         public static void LoadMapsFromFolder()
         {
@@ -55,7 +111,11 @@ namespace MapMaker
                 {
                     string mapJson = File.ReadAllText(mapFile);
                     Debug.Log($"Loaded map from file: {Path.GetFileName(mapFile)}");
-                    SpawnPlatformsFromMap(mapJson);
+                    Dictionary<string, object> Dict = MiniJSON.Json.Deserialize(mapJson) as Dictionary<string, object>;
+                    if (int.Parse((string)Dict["mapId"]) == CurrentMapId)
+                    {
+                        SpawnPlatformsFromMap(mapJson);
+                    }
                 }
                 catch (Exception ex)
                 {
@@ -94,16 +154,17 @@ namespace MapMaker
                     // Extract platform data (david)
                     Dictionary<string, object> transform = (Dictionary<string, object>)platform["transform"];
                     Dictionary<string, object> size = (Dictionary<string, object>)platform["size"];
+                    //doesnt work if any of them is a int for some reson? invalid cast error.
                     double x = (double)transform["x"];
                     double y = (double)transform["y"];
                     double width = (double)size["width"];
-                    //doesnt work if it is a int for some reson? invalid cast error.
                     double height = (double)size["height"];
                     double radius = (double)platform["radius"];
+                    //defult to 0 rotatson incase the json is missing it
                     double rotatson = 0;
                     if (platform.ContainsKey("rotation"))
                     { 
-                        rotatson = (double)platform["rotation"]; 
+                        rotatson = ConvertToRadians((double)platform["rotation"]);
                     }
                     // Spawn platform
                     SpawnPlatform((Fix)x, (Fix)y, (Fix)width, (Fix)height, (Fix)radius, (Fix)rotatson);
@@ -121,6 +182,22 @@ namespace MapMaker
             Debug.Log("OnSceneLoaded: " + scene.name);
             if (IsLevelName(scene.name)) // TODO: Check level, Replace with mapId from MapMaker Thing
             {
+                CurrentMapId = GetMapIdFromSceneName(scene.name);
+                var DoWeHaveMapWithMapId = CheckIfWeHaveCustomMapWithMapId();
+                //error if there are multiple maps with the same id
+                if (DoWeHaveMapWithMapId == MapIdCheckerThing.MultipleMapsFoundWithId)
+                {
+                    Debug.LogError("ERROR! MULTIPLE MAPS WITH THE GIVEM MAP ID FOUND! UHAFYIGGAFYAIO");
+                    return;
+                }
+                else
+                {
+                    if (DoWeHaveMapWithMapId == MapIdCheckerThing.NoMapFoundWithId)
+                    {
+                        Debug.Log("no custom map found for this map");
+                        return;
+                    }
+                }
                 //find the platforms and remove them (shadow + david)
                 levelt = GameObject.Find("Level").transform;
                 foreach (Transform tplatform in levelt)
@@ -165,10 +242,26 @@ namespace MapMaker
             return regex.IsMatch(input);
         }
         //https://stormconsultancy.co.uk/blog/storm-news/convert-an-angle-in-degrees-to-radians-in-c/
-        public double ConvertToRadians(double angle)
+        public static double ConvertToRadians(double angle)
         {
             return (Math.PI / 180) * angle;
         }
-        // JSON reading code here.
+        //https://stackoverflow.com/questions/19167669/keep-only-numeric-value-from-a-string
+        // simply replace the offending substrings with an empty string
+        public static int GetMapIdFromSceneName(string s)
+        {
+            Regex rxNonDigits = new Regex(@"[^\d]+");
+            if (string.IsNullOrEmpty(s)) return 0;
+            string cleaned = rxNonDigits.Replace(s, "");
+            //subtract 1 as scene names start with 1 but ids start with 0
+            return int.Parse(cleaned)-1;
+        }
+        public enum MapIdCheckerThing
+        {
+            MapFoundWithId,
+            NoMapFoundWithId,
+            MultipleMapsFoundWithId
+        }
+
     }
 }
