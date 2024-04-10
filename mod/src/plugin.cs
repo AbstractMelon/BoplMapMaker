@@ -154,12 +154,14 @@ namespace MapMaker
                     // Extract platform data (david)
                     Dictionary<string, object> transform = (Dictionary<string, object>)platform["transform"];
                     Dictionary<string, object> size = (Dictionary<string, object>)platform["size"];
-                    //doesnt work if any of them is a int for some reson? invalid cast error.
-                    double x = (double)transform["x"];
-                    double y = (double)transform["y"];
-                    double width = (double)size["width"];
-                    double height = (double)size["height"];
-                    double radius = (double)platform["radius"];
+
+                    //doesnt work if any of them is a int for some reson? invalid cast error. // PLEASE USE TO CODE TO MAKE IT WORK!
+                    double x = Convert.ToDouble(transform["x"]);
+                    double y = Convert.ToDouble(transform["y"]);
+                    double width = Convert.ToDouble(size["width"]);
+                    double height = Convert.ToDouble(size["height"]);
+                    double radius = Convert.ToDouble(platform["radius"]);
+
                     //defult to 0 rotatson incase the json is missing it
                     double rotatson = 0;
                     if (platform.ContainsKey("rotation"))
